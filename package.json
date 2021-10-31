@@ -1,0 +1,20 @@
+{
+  "name": "pomodoro",
+  "type": "module",
+  "main": "my-element.js",
+  "module": "my-element.js",
+  "scripts": {
+    "start": "cd build && python3 -m http.server",
+    "clean": "rm -r ./build",
+    "build": "yarn clean && rollup -c"
+  },
+  "dependencies": {
+    "@rollup/plugin-node-resolve": "^13.0.6",
+    "@web/rollup-plugin-copy": "^0.3.0",
+    "@web/rollup-plugin-html": "^1.10.1",
+    "lit": "^2.0.2",
+    "rollup-plugin-minify-html-literals": "^1.2.6",
+    "rollup-plugin-summary": "^1.3.0",
+    "rollup-plugin-terser": "^7.0.2"
+  }
+}

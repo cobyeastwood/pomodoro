@@ -1,0 +1,13 @@
+# output
+build/
+
+# dependencies
+node_modules/
+bower_components/
+
+# package
+.yarn/*
+!.yarn/releases
+!.yarn/plugins
+!.yarn/sdks
+!.yarn/versions
