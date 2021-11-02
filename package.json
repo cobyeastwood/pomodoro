@@ -1,8 +1,5 @@
 {
   "name": "pomodoro",
-  "type": "module",
-  "main": "my-element.js",
-  "module": "my-element.js",
   "scripts": {
     "start": "cd build && python3 -m http.server",
     "clean": "rm -r ./build",
