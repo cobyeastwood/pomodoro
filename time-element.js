@@ -1,7 +1,7 @@
 import { LitElement, css, html } from 'lit';
-import { templateContent } from 'lit/directives/template-content.js';
+import { until } from 'lit/directives/until.js';
 
-const template = document.querySelector('template#custom');
+import { audioElement } from './audio-element.js';
 
 function pad(pad, val) {
   return pad ? String(val).padStart(2, '0') : val;
@@ -28,15 +28,11 @@ export class TimeElement extends LitElement {
       color: #112d32;
       font-size: 16px;
     }
-
-    audio {
-      height: 0px;
-      width: 0px;
-    }
   `;
 
   constructor() {
     super();
+
     this.duration = 60;
     this.end = null;
     this.remaining = 0;
@@ -50,12 +46,12 @@ export class TimeElement extends LitElement {
     return html`<div>
       <h4>${min ? `${min}:${sec}` : `${sec}.${hun}`}</h4>
       ${remaining === 0
-        ? ''
+        ? until(this.getAudio(), '')
         : running
         ? html`<button @click=${this.pause}>Pause</button>`
         : html`<button @click=${this.start}>Start</button>`}
       <button @click="${this.reset}">Reset</button>
-      ${templateContent(template)}
+      ${audioElement}
     </div>`;
   }
 
@@ -63,8 +59,12 @@ export class TimeElement extends LitElement {
     return this.end && this.remaining;
   }
 
-  get audio() {
-    return this.renderRoot?.querySelector('#audio') ?? null;
+  async getAudio() {
+    const aud = this.renderRoot?.querySelector('audio#audio');
+
+    if (aud) {
+      await aud.play();
+    }
   }
 
   start() {
@@ -86,6 +86,7 @@ export class TimeElement extends LitElement {
     if (this.running) {
       this.remaining = Math.max(0, this.end - Date.now());
       requestAnimationFrame(() => this.tick());
+      return;
     }
   }
 
